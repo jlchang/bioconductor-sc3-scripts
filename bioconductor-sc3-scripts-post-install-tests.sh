@@ -70,19 +70,31 @@ export raw_singlecellexperiment_object="$output_dir/raw_sce.rds"
 export cpm_singlecellexperiment_object="$output_dir/cpm_sce.rds"
 export norm_singlecellexperiment_object="$output_dir/norm_sce.rds"
 export qc_singlecellexperiment_object="$output_dir/qc_sce.rds"
+export filtered_singlecellexperiment_object="$output_dir/filtered_sce.rds"
+export cell_filter_matrix="$output_dir/filtered_cells.csv"
+export feature_filter_matrix="$output_dir/filtered_features.csv"
 export cpm_matrix=$output_dir'/cpm_matrix.mtx'
 export spikein_gene_sets_file="$output_dir/random_genes.txt"
 export extracted_metrics_file="$output_dir/total_counts.txt"
 export outliers_file="$output_dir/outliers.txt"
+export k_singlecellexperiment_object="$output_dir/k_sce.rds"
+export k_text_file="$output_dir/k.txt"
+
+# SC3 outputs
+export sc3_prepared_singlecellexperiment_object="$output_dir/sc3_prep_sce.rds"
 
 ## Test parameters- would form config file in real workflow. DO NOT use these
 ## as default values without being sure what they mean.
 
-### optional variables parameters
+### Workflow parameters
+
+export min_cell_total_counts=500
+export min_cell_total_features=500
+export min_feature_n_cells_counts=10
 export size_factors='TRUE'
 export exprs_values="counts"
 export return_log='TRUE'
-export log_exprs_offset='NULL'
+export log_exprs_offset=1
 export centre_size_factors='TRUE'
 export return_norm_as_exprs='TRUE'
 export cell_controls='NULL'
@@ -94,6 +106,19 @@ export outlier_min_diff=5
 export outlier_type='higher'
 export outlier_log='TRUE'
 export outlier_test_metric='total_counts'
+
+## SC3 variable set
+export gene_filter='TRUE'
+export pct_dropout_min=10
+export pct_dropout_max=90
+export d_region_min=0.04
+export d_region_max=0.07
+export svm_max=5000
+export rand_seed=1
+export kmeans_iter_max='1e09'
+export n_cores=1
+export svm_num_cells=2000
+export kmeans_nstart=1000
 
 ################################################################################
 # Test individual scripts

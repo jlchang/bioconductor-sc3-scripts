@@ -79,11 +79,13 @@ export extracted_metrics_file="$output_dir/total_counts.txt"
 export outliers_file="$output_dir/outliers.txt"
 
 # SC3 outputs
+
 export sc3_prepared_singlecellexperiment_object="$output_dir/sc3_prep_sce.rds"
 export k_singlecellexperiment_object="$output_dir/k_sce.rds"
 export k_text_file="$output_dir/k.txt"
 export sc3_dists_singlecellexperiment_object="$output_dir/sc3_dists_sce.rds"
 export sc3_transfs_singlecellexperiment_object="$output_dir/sc3_transfs_sce.rds"
+export sc3_kmeans_object="$output_dir/sc3_kmeans_sce.rds"
 
 ## Test parameters- would form config file in real workflow. DO NOT use these
 ## as default values without being sure what they mean.
@@ -101,6 +103,7 @@ export centre_size_factors='TRUE'
 export return_norm_as_exprs='TRUE'
 export cell_controls='NULL'
 export nmads=5
+export k='NULL'
 export pct_feature_controls_threshold=80
 export n_spikein_genes=10
 export n_spikein_gene_sets=2

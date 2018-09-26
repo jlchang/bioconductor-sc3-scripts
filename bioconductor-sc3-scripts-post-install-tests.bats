@@ -205,3 +205,19 @@
     [ "$status" -eq 0 ]
     [ -f  "$sc3_transfs_singlecellexperiment_object" ]
 }
+
+# Cluster transform matrix using k-means
+
+@test "k-means clustering of cells." {
+   if [ "$use_existing_outputs" = 'true' ] && [ -f "$sc3_kmeans_object" ]; then
+       skip "$use_existing_outputs $sc3_kmeans_object exists and use_existing_outputs is set to 'true'"
+   fi
+
+   run rm -f $sc3_kmeans_object && sc3-sc3-kmeans.R -i $sc3_transfs_singlecellexperiment_object -k $(cat $k_text_file) -o $sc3_kmeans_object
+
+   echo "status = ${status}"
+   echo "output = ${output}"
+
+   [ "$status" -eq 0 ]
+   [ -f  "$sc3_kmeans_object" ]
+}

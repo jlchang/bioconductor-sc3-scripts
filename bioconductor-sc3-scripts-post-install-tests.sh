@@ -83,6 +83,7 @@ export sc3_prepared_singlecellexperiment_object="$output_dir/sc3_prep_sce.rds"
 export k_singlecellexperiment_object="$output_dir/k_sce.rds"
 export k_text_file="$output_dir/k.txt"
 export sc3_dists_singlecellexperiment_object="$output_dir/sc3_dists_sce.rds"
+export sc3_transfs_singlecellexperiment_object="$output_dir/sc3_transfs_sce.rds"
 
 ## Test parameters- would form config file in real workflow. DO NOT use these
 ## as default values without being sure what they mean.
@@ -90,8 +91,8 @@ export sc3_dists_singlecellexperiment_object="$output_dir/sc3_dists_sce.rds"
 ### Workflow parameters
 
 export min_cell_total_counts=500
-export min_cell_total_features=500
-export min_feature_n_cells_counts=10
+export min_cell_total_features=800
+export min_feature_n_cells_counts=100
 export size_factors='TRUE'
 export exprs_values="counts"
 export return_log='TRUE'
@@ -118,7 +119,7 @@ export svm_max=5000
 export rand_seed=1
 export kmeans_iter_max='1e09'
 export n_cores=1
-export svm_num_cells=2000
+export svm_num_cells=300
 export kmeans_nstart=1000
 
 ################################################################################

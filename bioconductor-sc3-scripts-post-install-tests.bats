@@ -189,3 +189,19 @@
     [ "$status" -eq 0 ]
     [ -f  "$sc3_dists_singlecellexperiment_object" ]
 }
+
+# Calculate transformations of the distance matrices
+
+@test "Calculate transformations of the distance matrices" {
+    if [ "$use_existing_outputs" = 'true' ] && [ -f "$sc3_transfs_singlecellexperiment_object" ]; then
+        skip "$use_existing_outputs $sc3_transfs_singlecellexperiment_object exists and use_existing_outputs is set to 'true'"
+    fi
+
+    run rm -f $sc3_transfs_singlecellexperiment_objec && sc3-sc3-calc-transfs.R -i $sc3_dists_singlecellexperiment_object -o $sc3_transfs_singlecellexperiment_object
+
+    echo "status = ${status}"
+    echo "output = ${output}"
+    
+    [ "$status" -eq 0 ]
+    [ -f  "$sc3_transfs_singlecellexperiment_object" ]
+}

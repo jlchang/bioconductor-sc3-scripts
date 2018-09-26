@@ -77,11 +77,12 @@ export cpm_matrix=$output_dir'/cpm_matrix.mtx'
 export spikein_gene_sets_file="$output_dir/random_genes.txt"
 export extracted_metrics_file="$output_dir/total_counts.txt"
 export outliers_file="$output_dir/outliers.txt"
-export k_singlecellexperiment_object="$output_dir/k_sce.rds"
-export k_text_file="$output_dir/k.txt"
 
 # SC3 outputs
 export sc3_prepared_singlecellexperiment_object="$output_dir/sc3_prep_sce.rds"
+export k_singlecellexperiment_object="$output_dir/k_sce.rds"
+export k_text_file="$output_dir/k.txt"
+export sc3_dists_singlecellexperiment_object="$output_dir/sc3_dists_sce.rds"
 
 ## Test parameters- would form config file in real workflow. DO NOT use these
 ## as default values without being sure what they mean.

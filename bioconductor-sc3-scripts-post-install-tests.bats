@@ -161,8 +161,8 @@
 # Calculate k size for SC3 clustering
 
 @test "Calculate k size for SC3 clustering" {
-    if [ "$use_existing_outputs" = 'true' ] && [ -f "$k_out" ]; then
-        skip "$use_existing_outputs $k_out exists and use_existing_outputs is set to 'true'"
+    if [ "$use_existing_outputs" = 'true' ] && [ -f "$k_text_file" ]; then
+        skip "$use_existing_outputs $k_text_file exists and use_existing_outputs is set to 'true'"
     fi
 
     run rm -f $k_out && sc3-sc3-estimate-k.R -i $sc3_prepared_singlecellexperiment_object -o $k_singlecellexperiment_object -t $k_text_file
@@ -172,4 +172,20 @@
     
     [ "$status" -eq 0 ]
     [ -f  "$k_text_file" ]
+}
+
+# Calculate distances
+
+@test "Calculate distances between the cells" {
+    if [ "$use_existing_outputs" = 'true' ] && [ -f "$sc3_dists_singlecellexperiment_object" ]; then
+        skip "$use_existing_outputs $sc3_dists_singlecellexperiment_object exists and use_existing_outputs is set to 'true'"
+    fi
+
+    run rm -f $sc3_dists_singlecellexperiment_object && sc3-sc3-calc-dists.R -i $k_singlecellexperiment_object -o $sc3_dists_singlecellexperiment_object
+
+    echo "status = ${status}"
+    echo "output = ${output}"
+    
+    [ "$status" -eq 0 ]
+    [ -f  "$sc3_dists_singlecellexperiment_object" ]
 }

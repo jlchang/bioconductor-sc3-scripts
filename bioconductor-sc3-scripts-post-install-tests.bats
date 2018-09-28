@@ -221,3 +221,18 @@
    [ "$status" -eq 0 ]
    [ -f  "$sc3_kmeans_object" ]
 }
+
+# Calculate consensus clustering
+
+@test "Calculate consensus clustering" {
+    if [ "$use_existing_outputs" = 'true' ] && [ -f "$sc3_consensus_object" ]; then
+        skip "$use_existing_outputs $sc3_consensus_object exists and use_existing_outputs is set to 'true'"
+    fi
+   
+    run rm -f $sc3_consensus_object && sc3-sc3-calc-consens.R -i $sc3_kmeans_object -d $sc3_clusters_dir -o $sc3_consensus_object
+    
+    echo "status = ${status}"
+    echo "output = ${output}"
+    [ "$status" -eq 0 ]
+    [ -f  "$sc3_consensus_object" ]
+}

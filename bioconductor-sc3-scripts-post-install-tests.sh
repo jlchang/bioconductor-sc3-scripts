@@ -86,6 +86,8 @@ export k_text_file="$output_dir/k.txt"
 export sc3_dists_singlecellexperiment_object="$output_dir/sc3_dists_sce.rds"
 export sc3_transfs_singlecellexperiment_object="$output_dir/sc3_transfs_sce.rds"
 export sc3_kmeans_object="$output_dir/sc3_kmeans_sce.rds"
+export sc3_consensus_object="$output_dir/sc3_consensus_sce.rds"
+export sc3_clusters_dir="$output_dir/clusters"
 
 ## Test parameters- would form config file in real workflow. DO NOT use these
 ## as default values without being sure what they mean.

@@ -54,10 +54,11 @@ clusters <- colData(SingleCellExperiment)[, grep('_clusters', colnames(colData(S
 
 # Write a clusters file for each K
 
-dir.create(opt$output_cluster_dir)
+unlink(opt$output_cluster_dir, recursive = TRUE)
+dir.create(opt$output_cluster_dir, showWarnings = FALSE)
 
 for (cluster_col in colnames(clusters)){
-  k <- sub('.*(\\d+).*', '\\1', colnames(clusters))
+  k <- sub('.*_(\\d+)_.*', '\\1', cluster_col)
   write.csv(data.frame(cell=rownames(clusters), cluster=clusters[[cluster_col]]), file = file.path(opt$output_cluster_dir, paste('clusters', k, 'csv', sep='.')), row.names = FALSE, na='', quote = FALSE)
 }
 

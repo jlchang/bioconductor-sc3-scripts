@@ -87,6 +87,7 @@ export sc3_dists_singlecellexperiment_object="$output_dir/sc3_dists_sce.rds"
 export sc3_transfs_singlecellexperiment_object="$output_dir/sc3_transfs_sce.rds"
 export sc3_kmeans_object="$output_dir/sc3_kmeans_sce.rds"
 export sc3_consensus_object="$output_dir/sc3_consensus_sce.rds"
+export sc3_biology_object="$output_dir/sc3_bio_sce.rds"
 export sc3_clusters_dir="$output_dir/clusters"
 
 ## Test parameters- would form config file in real workflow. DO NOT use these
@@ -125,7 +126,9 @@ export rand_seed=1
 export kmeans_iter_max='1e09'
 export n_cores=1
 export svm_num_cells=300
+export sc3_ks="10,11,12"
 export kmeans_nstart=1000
+export sc3_biology_regime='marker'
 
 ################################################################################
 # Test individual scripts

@@ -18,9 +18,9 @@ option_list = list(
   make_option(
     c("-k", "--ks"),
     action = "store",
-    default = NA,
-    type = 'numeric',
-    help = "A continuous range or a single integer representing the number of clusters - k - for SC3 clustering"
+    default = NULL,
+    type = 'character',
+    help = "A comma-separated string or single value representing the number of clusters k to be used for SC3 clustering."
   ),
   make_option(
     c("-o", "--output-object-file"),
@@ -38,8 +38,11 @@ if ( ! file.exists(opt$input_object_file)){
   stop((paste('SC3 file object', opt$input_object_file, 'does not exist.')))
 }
 
-if ( is.null(opt$k)){
+# Parse the ks to a vector
+if ( is.null(opt$ks)){
   stop((paste('Please provide a k.')))
+}else{
+  ks <- wsc_parse_numeric(opt, 'ks')
 }
 
 # Once arguments are satisfcatory, load Scater package
@@ -49,7 +52,7 @@ suppressPackageStartupMessages(require(SC3))
 SingleCellExperiment <- readRDS(opt$input_object_file)
 
 # calculate CPMs from raw count matrix
-SingleCellExperiment  <- sc3_kmeans(object = SingleCellExperiment, k = opt$k)
+SingleCellExperiment  <- sc3_kmeans(object = SingleCellExperiment, ks = ks)
 
 # Output to a serialized R object
 saveRDS(SingleCellExperiment, file = opt$output_object_file)

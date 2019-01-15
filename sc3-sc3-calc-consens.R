@@ -59,6 +59,22 @@ dir.create(opt$output_cluster_dir, showWarnings = FALSE)
 
 for (cluster_col in colnames(clusters)){
   k <- sub('.*_(\\d+)_.*', '\\1', cluster_col)
+  
+  # Write a summary for this K
+  
+  cluster_table <- data.frame(table(clusters[[cluster_col]]))
+  colnames(cluster_table) <- c('Cluster', 'No. cells') 
+  rownames(cluster_table) <- cluster_table$Cluster
+  
+  cat(
+    paste(
+      'Final cluster membership at k =', k,':\n'
+    ),
+    capture.output(cluster_table[, 2, drop = FALSE]),
+    paste(length(which(is.na(clusters[[cluster_col]]))), 'cells fall outside clusters'),
+    sep = '\n'
+  )
+  
   write.csv(data.frame(cell=rownames(clusters), cluster=clusters[[cluster_col]]), file = file.path(opt$output_cluster_dir, paste('clusters', k, 'csv', sep='.')), row.names = FALSE, na='', quote = FALSE)
 }
 

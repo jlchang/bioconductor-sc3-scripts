@@ -69,6 +69,8 @@ export raw_matrix=$data_dir'/matrix.mtx'
 export raw_singlecellexperiment_object="$output_dir/raw_sce.rds"
 export cpm_singlecellexperiment_object="$output_dir/cpm_sce.rds"
 export norm_singlecellexperiment_object="$output_dir/norm_sce.rds"
+export pca_singlecellexperiment_object="$output_dir/pca_sce.rds"
+export pca_plot_file="$output_dir/pca.png"
 export qc_singlecellexperiment_object="$output_dir/qc_sce.rds"
 export filtered_singlecellexperiment_object="$output_dir/filtered_sce.rds"
 export cell_filter_matrix="$output_dir/filtered_cells.csv"
@@ -95,9 +97,10 @@ export sc3_clusters_dir="$output_dir/clusters"
 
 ### Workflow parameters
 
+export col_names=TRUE
 export min_cell_total_counts=500
-export min_cell_total_features=800
-export min_feature_n_cells_counts=100
+export min_cell_total_features=50
+export min_feature_n_cells_counts=10
 export size_factors='TRUE'
 export exprs_values="counts"
 export return_log='TRUE'
@@ -105,9 +108,11 @@ export log_exprs_offset=1
 export centre_size_factors='TRUE'
 export return_norm_as_exprs='TRUE'
 export cell_controls='NULL'
+export percent_top='5,100,200,500'
+export detection_limit=5
+export use_spikes=TRUE
 export nmads=5
 export k='NULL'
-export pct_feature_controls_threshold=80
 export n_spikein_genes=10
 export n_spikein_gene_sets=2
 export outlier_min_diff=5
@@ -126,9 +131,20 @@ export rand_seed=1
 export kmeans_iter_max='1e09'
 export n_cores=1
 export svm_num_cells=300
-export sc3_ks="10,11,12"
+export sc3_ks="3,4,5,6"
 export kmeans_nstart=1000
 export sc3_biology_regime='marker'
+
+export pca_ncomponents=2
+export pca_method='prcomp'
+export pca_ntop=500
+export pca_exprs_values='logcounts'
+export pca_scale_features=TRUE
+export pca_detect_outliers=TRUE
+
+export plot_components='1,2'
+export png_height=1000
+export png_width=1000
 
 ################################################################################
 # Test individual scripts

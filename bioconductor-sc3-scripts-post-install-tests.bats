@@ -22,7 +22,7 @@
         skip "$use_existing_outputs $raw_singlecellexperiment_object exists and use_existing_outputs is set to 'true'"
     fi
     
-    run rm -f $raw_singlecellexperiment_object && scater-read-10x-results.R -d $data_dir -o $raw_singlecellexperiment_object
+    run rm -f $raw_singlecellexperiment_object && dropletutils-read-10x-counts.R -s $data_dir -c $col_names -o $raw_singlecellexperiment_object
     echo "status = ${status}"
     echo "output = ${output}"
     
@@ -65,7 +65,6 @@
     [ -f  "$spikein_gene_sets_file" ]
 }
 
-
 # Calculate some QC metrics
 
 @test "Calculate QC metrics" {
@@ -73,7 +72,7 @@
         skip "$use_existing_outputs $qc_singlecellexperiment_object exists and use_existing_outputs is set to 'true'"
     fi
 
-    run rm -f $qc_singlecellexperiment_object && scater-calculate-qc-metrics.R -i $raw_singlecellexperiment_object -e $exprs_values -f $spikein_gene_sets_file -c $cell_controls -n $nmads -p $pct_feature_controls_threshold -o $qc_singlecellexperiment_object
+    run rm -f $qc_singlecellexperiment_object && scater-calculate-qc-metrics.R -i $raw_singlecellexperiment_object -e $exprs_values -f $spikein_gene_sets_file -c $cell_controls -p $percent_top -d $detection_limit -s $use_spikes -o $qc_singlecellexperiment_object
     echo "status = ${status}"
     echo "output = ${output}"
     
@@ -104,7 +103,7 @@
         skip "$use_existing_outputs $norm_singlecellexperiment_object exists and use_existing_outputs is set to 'true'"
     fi
 
-    run rm -f $norm_singlecellexperiment_object && scater-normalize.R -i $filtered_singlecellexperiment_object -e $exprs_values -l $return_log -f $log_exprs_offset -c $centre_size_factors -r $return_norm_as_exprs -o $norm_singlecellexperiment_object
+    run rm -f $norm_singlecellexperiment_object && scater-normalize.R -i $filtered_singlecellexperiment_object -e $exprs_values -l $return_log -f $log_exprs_offset -c $centre_size_factors -o $norm_singlecellexperiment_object
     echo "status = ${status}"
     echo "output = ${output}"
     
@@ -250,4 +249,34 @@
     echo "output = ${output}"
     [ "$status" -eq 0 ]
     [ -f  "$sc3_biology_object" ]
+}
+
+# Do PCA
+
+@test "Perform PCA on cell-level data" {
+    if [ "$use_existing_outputs" = 'true' ] && [ -f "$pca_singlecellexperiment_object" ]; then
+        skip "$use_existing_outputs $pca_singlecellexperiment_object exists and use_existing_outputs is set to 'true'"
+    fi
+
+    run rm -f $pca_singlecellexperiment_object && scater-run-pca.R -i $sc3_consensus_object -n $pca_ncomponents -m $pca_method -n $pca_ntop -e $pca_exprs_values -s $pca_scale_features -d $pca_detect_outliers -o $pca_singlecellexperiment_object 
+    echo "status = ${status}"
+    echo "output = ${output}"
+    
+    [ "$status" -eq 0 ]
+    [ -f  "$pca_singlecellexperiment_object" ]
+}
+
+# Plot PCA
+
+@test "Plot PCA on cell-level data" {
+    if [ "$use_existing_outputs" = 'true' ] && [ -f "$pca_plot_file" ]; then
+        skip "$use_existing_outputs $pca_singlecellexperiment_object exists and use_existing_outputs is set to 'true'"
+    fi
+
+    run rm -f $pca_plot_file && scater-plot-reduced-dim.R -i $pca_singlecellexperiment_object -d 'PCA' -n $plot_components -z 'total_counts' -c 'sc3_3_clusters' -e $pca_exprs_values -w $png_width -j $png_height -o $pca_plot_file
+    echo "status = ${status}"
+    echo "output = ${output}"
+    
+    [ "$status" -eq 0 ]
+    [ -f  "$pca_plot_file" ]
 }

@@ -16,11 +16,11 @@ option_list = list(
     help = "File name in which a SC3 'SingleCellExperiment' object has been stored after kmeans clustering."
   ),
   make_option(
-    c("-d", "--output-cluster-dir"),
+    c("-t", "--output-text-file"),
     action = "store",
     default = NA,
     type = 'character',
-    help = "An output directory in which to write clusters and marker genes."
+    help = "Text file name in which to store clusters, one column for every k value."
   ),
   make_option(
     c("-o", "--output-object-file"),
@@ -31,7 +31,7 @@ option_list = list(
   )
 )
 
-opt <- wsc_parse_args(option_list, mandatory = c('input_object_file', 'output_object_file', 'output_cluster_dir'))
+opt <- wsc_parse_args(option_list, mandatory = c('input_object_file', 'output_object_file', 'output_text_file'))
 
 # Check parameter values defined
 if ( ! file.exists(opt$input_object_file)){
@@ -52,11 +52,6 @@ SingleCellExperiment  <- sc3_calc_consens(object = SingleCellExperiment)
 
 clusters <- colData(SingleCellExperiment)[, grep('_clusters', colnames(colData(SingleCellExperiment))), drop = FALSE]
 
-# Write a clusters file for each K
-
-unlink(opt$output_cluster_dir, recursive = TRUE)
-dir.create(opt$output_cluster_dir, showWarnings = FALSE)
-
 for (cluster_col in colnames(clusters)){
   k <- sub('.*_(\\d+)_.*', '\\1', cluster_col)
   
@@ -74,9 +69,11 @@ for (cluster_col in colnames(clusters)){
     paste(length(which(is.na(clusters[[cluster_col]]))), 'cells fall outside clusters'),
     sep = '\n'
   )
-  
-  write.csv(data.frame(cell=rownames(clusters), cluster=clusters[[cluster_col]]), file = file.path(opt$output_cluster_dir, paste('clusters', k, 'csv', sep='.')), row.names = FALSE, na='', quote = FALSE)
 }
+
+# Output clusters to a tab-delimted file
+clusters <- cbind(Cell=rownames(clusters), clusters)
+write.table(clusters, file = opt$output_text_file, sep = "\t", row.names = FALSE, quote = FALSE, na='')
 
 # Output to a serialized R object
 saveRDS(SingleCellExperiment, file = opt$output_object_file)

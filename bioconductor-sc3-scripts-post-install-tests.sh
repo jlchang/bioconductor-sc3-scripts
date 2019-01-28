@@ -90,7 +90,8 @@ export sc3_transfs_singlecellexperiment_object="$output_dir/sc3_transfs_sce.rds"
 export sc3_kmeans_object="$output_dir/sc3_kmeans_sce.rds"
 export sc3_consensus_object="$output_dir/sc3_consensus_sce.rds"
 export sc3_biology_object="$output_dir/sc3_bio_sce.rds"
-export sc3_clusters_dir="$output_dir/clusters"
+export sc3_clusters_file="$output_dir/clusters.txt"
+export sc3_markers_dir="$output_dir/markers"
 
 ## Test parameters- would form config file in real workflow. DO NOT use these
 ## as default values without being sure what they mean.

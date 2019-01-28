@@ -228,12 +228,12 @@
         skip "$use_existing_outputs $sc3_consensus_object exists and use_existing_outputs is set to 'true'"
     fi
    
-    run rm -f $sc3_consensus_object && sc3-sc3-calc-consens.R -i $sc3_kmeans_object -d $sc3_clusters_dir -o $sc3_consensus_object
+    run rm -f $sc3_consensus_object && sc3-sc3-calc-consens.R -i $sc3_kmeans_object -t $sc3_clusters_file -o $sc3_consensus_object
     
     echo "status = ${status}"
     echo "output = ${output}"
     [ "$status" -eq 0 ]
-    [ -f  "$sc3_consensus_object" ]
+    [ -f  "$sc3_clusters_file" ]
 }
 
 # Calculate cluster markers
@@ -243,7 +243,7 @@
         skip "$use_existing_outputs $sc3_biology_object exists and use_existing_outputs is set to 'true'"
     fi
    
-    run rm -f $sc3_biology_object && sc3-sc3-calc-biology.R -i $sc3_consensus_object -d $sc3_clusters_dir -k $sc3_ks -r $sc3_biology_regime -o $sc3_biology_object
+    run rm -f $sc3_biology_object && sc3-sc3-calc-biology.R -i $sc3_consensus_object -d $sc3_markers_dir -k $sc3_ks -r $sc3_biology_regime -o $sc3_biology_object
     
     echo "status = ${status}"
     echo "output = ${output}"

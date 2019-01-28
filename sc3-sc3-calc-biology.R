@@ -74,6 +74,9 @@ SingleCellExperiment  <- sc3_calc_biology(object = SingleCellExperiment, ks = ks
 # Get results by k
 results_cols <- grep(opt$regime, colnames(rowData(SingleCellExperiment)), value = TRUE)
 
+# Create output directory
+dir.create(opt$output_dir)
+
 for (k in ks){
   k_cols <- grep(paste0('_', k, '_'), results_cols, value = TRUE)
   results <- cbind(data.frame(cell = rownames(SingleCellExperiment)), rowData(SingleCellExperiment)[, k_cols, drop = FALSE])

@@ -76,7 +76,7 @@ option_list = list(
   make_option(
     c("-t", "--n-cores"),
     action = "store",
-    default = NA,
+    default = NULL,
     type = 'integer',
     help = "Number of threads/cores to be used in the user's machine."
   ),

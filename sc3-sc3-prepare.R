@@ -139,9 +139,6 @@ SingleCellExperiment <- readRDS(opt$input_object_file)
 # SC3 needs this
 rowData(SingleCellExperiment)$feature_symbol <- rownames(SingleCellExperiment)
 
-# Temporary fix to deal with https://github.com/hemberg-lab/SC3/issues/53
-assignInNamespace(x='rowSums', value=Matrix::rowSums, ns="base")
-
 # Create SCE object from data
 
 SingleCellExperiment <- sc3_prepare(SingleCellExperiment, gene_filter = opt$gene_filter, pct_dropout_min = opt$pct_dropout_min, pct_dropout_max = opt$pct_dropout_max, d_region_min = opt$d_region_min,

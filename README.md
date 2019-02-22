@@ -17,7 +17,7 @@ conda install bioconductor-sc3-scripts
 There is a test script included:
 
 ```
-bioconductor-sc3-post-install-tests.sh
+bioconductor-sc3-scripts-post-install-tests.sh
 ```
 
 This downloads [a well-known test 10X dataset]('https://s3-us-west-2.amazonaws.com/10x.files/samples/cell/pbmc3k/pbmc3k_filtered_gene_bc_matrices.tar.gz) and executes all of the scripts described below.

@@ -28,7 +28,7 @@ The available wrapped SC3 functions are described below. Each script has usage i
 
 ### sc3_prepare(): prepare a SingleCellExperiment for SC3
 
-See ?sce_prepare for argument meanings.
+See ?sc3_prepare for argument meanings.
 
 ```
 sc3-sc3-prepare.R -i <SingleCellExperiment object as .rds> -f <gene_filter> -p <pct_dropout_min> \
@@ -66,7 +66,7 @@ sc3-sc3-kmeans.R -i <SingleCellExperiment object from sc3_calc_transfs() as .rds
     -k <k values to try, comma-separated> -o <path to file where .rds output file will be stored>
 ```
 
-### sc3_calce_consens(): Calculate consensus clustering
+### sc3_calc_consens(): Calculate consensus clustering
 
 ```
 sc3-calc-consens.R -i <SingleCellExperiment object from sc3_kmeans() as .rds> \

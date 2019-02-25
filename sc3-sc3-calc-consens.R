@@ -75,5 +75,8 @@ for (cluster_col in colnames(clusters)){
 clusters <- cbind(Cell=rownames(clusters), clusters)
 write.table(clusters, file = opt$output_text_file, sep = "\t", row.names = FALSE, quote = FALSE, na='')
 
+# Print introspective information
+cat(capture.output(SingleCellExperiment), sep='\n')
+
 # Output to a serialized R object
 saveRDS(SingleCellExperiment, file = opt$output_object_file)

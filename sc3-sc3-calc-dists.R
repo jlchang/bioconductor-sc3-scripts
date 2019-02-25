@@ -60,6 +60,9 @@ assays(SingleCellExperiment) <- lapply(assays(SingleCellExperiment), function(x)
 
 SingleCellExperiment <- sc3_calc_dists(SingleCellExperiment)
 
+# Print introspective information
+cat(capture.output(SingleCellExperiment), sep='\n')
+
 # Output to a serialized R object
 
 saveRDS(SingleCellExperiment, file = opt$output)

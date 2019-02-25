@@ -152,6 +152,9 @@ if (is.null(SingleCellExperiment)){
   stop("sc3_prepare() failed")
 }
 
+# Print introspective information
+cat(capture.output(SingleCellExperiment), sep='\n')
+
 # Output to a serialized R object
 
 saveRDS(SingleCellExperiment, file = opt$output)

@@ -83,5 +83,8 @@ for (k in ks){
   write.csv(results, file = file.path(opt$output_dir, paste(opt$regime, k, 'csv', sep='.')), row.names = FALSE, na='', quote = FALSE)
 }
 
+# Print introspective information
+cat(capture.output(SingleCellExperiment), sep='\n')
+
 # Output to a serialized R object
 saveRDS(SingleCellExperiment, file = opt$output_object_file)

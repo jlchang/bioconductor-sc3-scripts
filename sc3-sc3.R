@@ -153,7 +153,7 @@ if (! is.null(opt$svm_train_inds)){
 }
 
 
-# Once arguments are satisfcatory, load SC3 package
+# Once arguments are satisfactory, load SC3 package
 suppressPackageStartupMessages(require(SC3))
 suppressPackageStartupMessages(require(SingleCellExperiment))
 
@@ -166,32 +166,26 @@ rowData(SingleCellExperiment)$feature_symbol <- rownames(SingleCellExperiment)
 # Temporary fix to deal with https://github.com/hemberg-lab/SC3/issues/53
 assignInNamespace(x = "rowSums", value = Matrix::rowSums, ns = "base")
 
-# Create SCE object from data
-## If the user has specified ks, parse the ks to a vector and use as ks value
+# Determine value of ks to pass to sc3_kmeans()
 if (! is.null(opt$ks)){
+  ## If the user has specified ks, parse the ks to a vector and use as ks value
   ks <- wsc_parse_numeric(opt, "ks")
-  SingleCellExperiment <- sc3(SingleCellExperiment, ks = ks, gene_filter = opt$gene_filter,
-                            pct_dropout_min = opt$pct_dropout_min, pct_dropout_max = opt$pct_dropout_max,
-                            d_region_min = opt$d_region_min, d_region_max = opt$d_region_max,
-                            svm_num_cells = opt$svm_num_cells, svm_train_inds = opt$svm_train_inds,
-                            svm_max = opt$svm_max, n_cores = opt$n_cores, kmeans_nstart = opt$kmeans_nstart,
-                            kmeans_iter_max = opt$kmeans_iter_max, k_estimator = opt$k_estimator,
-                            biology = opt$biology, rand_seed = opt$rand_seed)
 } else {
+  ## run sc3_estimate_k() and extract resulting estimate to pass to sc3_kmeans() as 'ks' parameter
   SingleCellExperiment <- sc3_estimate_k(SingleCellExperiment)
-  # extracting value to pass to sc3_kmeans() as 'ks' parameter
-  k_param <- metadata(SingleCellExperiment)$sc3$k_estimation
-  SingleCellExperiment <- sc3(SingleCellExperiment, ks = k_param, gene_filter = opt$gene_filter,
+  ks <- metadata(SingleCellExperiment)$sc3$k_estimation
+}
+# Create SCE object from data and run SC3
+SingleCellExperiment <- sc3(SingleCellExperiment, ks = ks, gene_filter = opt$gene_filter,
                             pct_dropout_min = opt$pct_dropout_min, pct_dropout_max = opt$pct_dropout_max,
                             d_region_min = opt$d_region_min, d_region_max = opt$d_region_max,
                             svm_num_cells = opt$svm_num_cells, svm_train_inds = opt$svm_train_inds,
                             svm_max = opt$svm_max, n_cores = opt$n_cores, kmeans_nstart = opt$kmeans_nstart,
                             kmeans_iter_max = opt$kmeans_iter_max, k_estimator = opt$k_estimator,
                             biology = opt$biology, rand_seed = opt$rand_seed)
-}
 
 if (is.null(SingleCellExperiment)){
-  stop("sc3_prepare() failed")
+  stop("sc3() failed")
 }
 
 # Output to a serialized R object
